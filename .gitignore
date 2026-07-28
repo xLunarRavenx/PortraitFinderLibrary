@@ -3,7 +3,11 @@
 # Get latest from https://github.com/github/gitignore/blob/main/Unity.gitignore
 #
 # force includes
-!PortraitFinder.App/
+!PortraitFinder.App/*
+PortraitFinder.App/[Bb]in/*
+PortraitFinder.App/[Oo]bj/*
+PortraitFinder.Data/[Oo]bj/*
+PortraitFinder.Data/[Oo]bj/*
 
 /[Ll]ibrary/
 /[Tt]emp/
