@@ -1,0 +1,17 @@
+D:\Coding\PortraitFinderLibrary\PortraitFinder.Data\bin\Debug\net10.0\PortraitFinder.Data.deps.json
+D:\Coding\PortraitFinderLibrary\PortraitFinder.Data\bin\Debug\net10.0\PortraitFinder.Data.runtimeconfig.json
+D:\Coding\PortraitFinderLibrary\PortraitFinder.Data\bin\Debug\net10.0\PortraitFinder.Data.dll
+D:\Coding\PortraitFinderLibrary\PortraitFinder.Data\bin\Debug\net10.0\PortraitFinder.Data.pdb
+D:\Coding\PortraitFinderLibrary\PortraitFinder.Data\bin\Debug\net10.0\PortraitFinder.Model.dll
+D:\Coding\PortraitFinderLibrary\PortraitFinder.Data\bin\Debug\net10.0\PortraitFinder.Model.pdb
+D:\Coding\PortraitFinderLibrary\PortraitFinder.Data\obj\Debug\net10.0\PortraitFinder.Data.csproj.AssemblyReference.cache
+D:\Coding\PortraitFinderLibrary\PortraitFinder.Data\obj\Debug\net10.0\PortraitFinder.Data.GeneratedMSBuildEditorConfig.editorconfig
+D:\Coding\PortraitFinderLibrary\PortraitFinder.Data\obj\Debug\net10.0\PortraitFinder.Data.AssemblyInfoInputs.cache
+D:\Coding\PortraitFinderLibrary\PortraitFinder.Data\obj\Debug\net10.0\PortraitFinder.Data.AssemblyInfo.cs
+D:\Coding\PortraitFinderLibrary\PortraitFinder.Data\obj\Debug\net10.0\PortraitFinder.Data.csproj.CoreCompileInputs.cache
+D:\Coding\PortraitFinderLibrary\PortraitFinder.Data\obj\Debug\net10.0\Portrait.2AFA30DF.Up2Date
+D:\Coding\PortraitFinderLibrary\PortraitFinder.Data\obj\Debug\net10.0\PortraitFinder.Data.dll
+D:\Coding\PortraitFinderLibrary\PortraitFinder.Data\obj\Debug\net10.0\refint\PortraitFinder.Data.dll
+D:\Coding\PortraitFinderLibrary\PortraitFinder.Data\obj\Debug\net10.0\PortraitFinder.Data.pdb
+D:\Coding\PortraitFinderLibrary\PortraitFinder.Data\obj\Debug\net10.0\PortraitFinder.Data.genruntimeconfig.cache
+D:\Coding\PortraitFinderLibrary\PortraitFinder.Data\obj\Debug\net10.0\ref\PortraitFinder.Data.dll

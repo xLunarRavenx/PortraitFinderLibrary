@@ -1,0 +1,6 @@
+<Solution>
+  <Project Path="PortraitFinder.App/PortraitFinder.App.csproj" />
+  <Project Path="PortraitFinder.Data/PortraitFinder.Data.csproj" />
+  <Project Path="PortraitFinder.Model/PortraitFinder.Model.csproj" />
+  <Project Path="PortraitFinder.Services/PortraitFinder.Services.csproj" />
+</Solution>

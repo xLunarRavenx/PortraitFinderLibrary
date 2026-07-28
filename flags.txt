@@ -1,0 +1,45 @@
+
+	++------------------+-------------------+-----------------------+-------------------+-------------------------------+---------------------------++
+	||	gender 3		|	weapon 27		|	hair 21				|	setting 18		|	classes 39					|	mythic 11				||
+	||		M			|		knife		|		blonde			|		forest		|		alchemist				|		none				||
+	||		F			|		spear		|		brown			|		city		|		arcanist				|		azata+				||
+	||		X			|		1hsword		|		black			|		dungeon		|		barbarian				|		angel+				||
+	||					|		2hsword		|		red				|		mountain	|		bard					|		golddragon+			||
+	++------------------+		2haxe		|		green			|		plains		|		bloodrager				|		aeon+				||
+	||	race 12			|		1haxe		|		blue			|		desert		|		cavalier				|		trickster+			||
+	||		human		|		bow			|		yellow			|		water		|		cleric					|		devil+				||
+	||		elf			|		crossbow	|		orange			|		room		|		druid					|		swarmthatwalks+		||
+	||		halfelf		|		staff		|		purple			|		snow		|		fighter					|		lich+				||
+	||		halforc		|		wand		|		pink			|		fire		|		hunter					|		demon+				||
+	||		gnome		|		1hspell		|		bald			|		trees		|		inquisitor				|		legend+				||
+	||		halfling	|		2hspell		|		grey			|		plants		|		kineticist				|							||
+	||		dwarf		|		aura		|		white			|		cave		|		magus					|							||
+	||		tiefling	|		flail		|		colorful		|		rain		|		monk					|							||
+	||		oread		|		glaive		|		shaved			|		clouds		|		oracle					|							||
+	||		dhampir		|		whip		|		veryshort		|		stars		|		paladin					|							||
+	||		kistune		|		shield		|		short			|		sky			|		ranger					|							||
+	||		aasimar		|		potion		|		aboveshoulder	|		none		|		rogue					|							||
+	||					|		bomb		|		shoulder		|					|		shaman					|							||
+	++------------------+		2hhammer	|		midback			|					|		shifter					|							||
+	||	wings 4			|		1hhammer	|		long			|					|		skald					|							||
+	||		feather		|		2hclub		|						|					|		slayer					|							||
+	||		demon		|		1hclub		+-----------------------+					|		sorcerer				|							||
+	||		other		|		scroll		|	creature 6			|					|		warpriest				|							||
+	||		none		|		book		|		companion		|					|		witch					|							||
+	||					|		other		|		mount			|					|		wizard					|							||
+	++------------------+		none		|		horse			|					|		arcanetrickster*		|							||
+	||	head 9			|					|		animal			|					|		assassin*				|							||
+	||		halo		+-------------------+		undead			|					|		stalwartdefender*		|							||
+	||		horns		|	armor 6			|		none			|					|		eldritchknight*			|							||
+	||		gloweyes	|		plate		|						|					|		dragondisciple*			|							||
+	||		blind		|		chain		|						|					|		hellknight*				|							||
+	||		helm		|		leather		|						|					|		mystictheurge*			|							||
+	||		hat			|		cloth		|						|					|		duelist*				|							||
+	||		headwear	|		shield		|						|					|		aldoriswordlord*		|							||
+	||		mask		|		none		|						|					|		studentofwar*			|							||
+	||		crown		|					|						|					|		hellknightsignifier*	|							||
+	||		none		|					|						|					|		loremaster*				|							||
+	||					|					|						|					|		winterwitch*			|							||
+	||					|					|						|					|								|							||
+	||					|					|						|					|								|							||
+	++------------------+-------------------+-----------------------+-------------------+-------------------------------+---------------------------++
