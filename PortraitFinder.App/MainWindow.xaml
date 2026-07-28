@@ -1,0 +1,198 @@
+﻿<Window x:Class="PortraitFinder.App.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:PortraitFinder.App"
+        xmlns:model="clr-namespace:PortraitFinder.App.ViewModels"
+        mc:Ignorable="d"
+        Title="Portrait Finder"
+        Width="1700"
+        Height="900"
+        SizeChanged="Window_SizeChanged"
+>
+    <Window.Resources>
+        <!-- <Style  x:Key="ThumbnailToggleStyle" TargetType="ToggleButton">
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Padding" Value="0"/>
+
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="#081a2a"/>
+                </Trigger>
+                <Trigger Property="IsChecked" Value="True">
+                    <Setter Property="Background" Value="#102e4a"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style> -->
+        <Style x:Key="ThumbnailToggleStyle" TargetType="ToggleButton">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="ToggleButton">
+                        <Border x:Name="Border"
+                                BorderBrush="Transparent"
+                                BorderThickness="2"
+                                CornerRadius="4">
+                            <ContentPresenter/>
+                        </Border>
+
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="Border" Property="BorderBrush" Value="#4A90D9"/>
+                                <Setter TargetName="Border" Property="Background" Value="#081A2A"/>
+                                <Setter TargetName="Border" Property="BorderThickness" Value="2"/>
+                            </Trigger>
+                            <Trigger Property="IsChecked" Value="True">
+                                <Setter TargetName="Border" Property="BorderBrush" Value="#22598A"/>
+                                <Setter TargetName="Border" Property="Background" Value="#102E4A"/>
+                                <Setter TargetName="Border" Property="BorderThickness" Value="2"/>
+                            </Trigger>
+                            <MultiTrigger>
+                                <MultiTrigger.Conditions>
+                                    <Condition Property="IsChecked" Value="True"/>
+                                    <Condition Property="IsMouseOver" Value="True"/>
+                                </MultiTrigger.Conditions>
+
+                                <Setter TargetName="Border" Property="Background" Value="#163C60"/>
+                                <Setter TargetName="Border" Property="BorderBrush" Value="#4EA3FF"/>
+                                <Setter TargetName="Border" Property="BorderThickness" Value="2"/>
+                            </MultiTrigger>                            
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Window.Resources>
+
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="270"/>
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+
+        <ScrollViewer Name="ScrollViewerFilters" Grid.Column="0">
+            <StackPanel Orientation="Vertical">
+                <!-- TODO:
+                    * convert the expanders to be templated(?) to use the groups from the ViewModel
+                    * use bindings to update the view model or update the checkboxes when the view model changes
+                    * consider a search bar for each expander for filtering the checkboxes
+                    * consider add a max height and scrolling for the expanders to consolidate screenspace
+                        * alternate:
+                            grid splitters on the expanders' expanded panel so the user can resize them.
+                            make sure there is a min height so they don't collapse to nothing
+                    * consider a single "untagged" checkbox in the filters to uncheck all the expander checkboxes and find only portraits with nothing set yet
+                    * add a "reset" button to reset the filters
+                    * replace the placeholders to use bindings, especially for the images
+                -->
+                <Expander Name="GenderExpander" Header="Gender" IsExpanded="True">
+                    <StackPanel Orientation="Vertical">
+                        <CheckBox Name="GenderMaleCheckBox" Content="Male" IsChecked="False" />
+                        <CheckBox Name="GenderFemaleCheckBox" Content="Female" IsChecked="False" />
+                        <CheckBox Name="GenderOtherCheckBox" Content="Other" IsChecked="False" />
+                    </StackPanel>
+                </Expander>
+                <Expander Name="RaceExpander" Header="Race" IsExpanded="True">
+                    <StackPanel Orientation="Vertical">
+                        <CheckBox Name="RaceCheckBox" Content="Male" IsChecked="False" />
+                        <CheckBox Name="Race1CheckBox" Content="Female" IsChecked="False" />
+                        <CheckBox Name="Race2CheckBox" Content="Other" IsChecked="False" />
+                    </StackPanel>
+                </Expander>
+            </StackPanel>
+        </ScrollViewer>
+        
+        <Grid Grid.Column="1" Margin="15">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="638" />
+            </Grid.ColumnDefinitions>
+
+            <ListBox Name="PortraitsListBox"
+                     Grid.Column="0" 
+                     HorizontalAlignment="Stretch"
+                     VerticalAlignment="Stretch"
+                     ItemsSource="{Binding PortraitRows}"
+                     VirtualizingStackPanel.IsVirtualizing="True"
+                     VirtualizingStackPanel.VirtualizationMode="Recycling"
+                     ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                     Margin="0,0,15,0"
+                     SelectionMode="Single"
+                     Focusable="False"
+            >
+                <ListBox.ItemContainerStyle>
+                    <Style TargetType="ListBoxItem">
+                        <Setter Property="Focusable" Value="False"/>
+                        <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+                        <Setter Property="Padding" Value="0"/>
+
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="ListBoxItem">
+                                    <ContentPresenter
+                                        HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                        VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                        Content="{TemplateBinding Content}"
+                                        ContentTemplate="{TemplateBinding ContentTemplate}" />
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                    </Style>
+                </ListBox.ItemContainerStyle>
+
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <ItemsControl ItemsSource="{Binding RowThumbnails}">
+                            <ItemsControl.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <StackPanel Orientation="Horizontal"/>
+                                </ItemsPanelTemplate>
+                            </ItemsControl.ItemsPanel>
+                            
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <ToggleButton
+                                        x:Name="ThumbnailButton"
+                                        Style="{StaticResource ThumbnailToggleStyle}"
+                                        IsChecked="{Binding IsSelected}"
+                                        Focusable="False"
+                                        Width="165"
+                                        Height="156"
+                                        Margin="0,0,10,10"
+                                        Command="{Binding DataContext.SelectPortraitCommand, RelativeSource={RelativeSource AncestorType=Window}}"
+                                        CommandParameter="{Binding}"
+                                    >
+                                            <Grid HorizontalAlignment="Stretch" VerticalAlignment="Top">
+                                                <Image Panel.ZIndex="0" Width="110" Height="144" Source="{Binding Thumbnail}" VerticalAlignment="Top"  />
+                                            </Grid>
+                                    </ToggleButton>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+
+            <Grid Grid.Column="1">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="111" />
+                    <ColumnDefinition Width="142" />
+                    <ColumnDefinition Width="21" />
+                    <ColumnDefinition Width="364" />
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="185"/>
+                    <RowDefinition Height="21"/>
+                    <RowDefinition Height="331"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+
+                <Image Grid.Column="1" Grid.Row="0" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Source="{Binding SelectedSmallPortrait}" />
+                <Image Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="2" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Source="{Binding SelectedMediumPortrait}" />
+                <Image Grid.Column="3" Grid.Row="0" Grid.RowSpan="3" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Source="{Binding SelectedFullLengthPortrait}" />
+            </Grid>
+        </Grid>
+
+    </Grid>
+</Window>
