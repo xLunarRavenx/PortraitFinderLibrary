@@ -74,5 +74,11 @@ crashlytics-build.properties
 
 # force includes
 !PortraitFinder.App/
-PortraitFinder.App/[Oo]bj/
-PortraitFinder.App/[Bb]in/
+PortraitFinder.App/[Bb]in/*
+PortraitFinder.App/[Oo]bj/*
+PortraitFinder.Data/[Bb]in/*
+PortraitFinder.Data/[Oo]bj/*
+PortraitFinder.Model/[Bb]in/*
+PortraitFinder.Model/[Oo]bj/*
+PortraitFinder.Services/[Bb]in/*
+PortraitFinder.Services/[Oo]bj/*

@@ -65,8 +65,6 @@ public partial class MainWindow : Window
 
         _log.LogInformation("Should make {columns} columns", columns);
 
-        _mainViewModel.Columns = columns;
-
         _mainViewModel.PortraitRows.Clear();
         for (int i = 0; i < _mainViewModel.AllPortraits.Count; i += columns)
         {

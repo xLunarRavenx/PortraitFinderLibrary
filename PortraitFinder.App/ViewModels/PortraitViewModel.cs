@@ -2,12 +2,14 @@ using System.ComponentModel;
 using System.IO;
 using System.Runtime.CompilerServices;
 using System.Windows.Media.Imaging;
+using CommunityToolkit.Mvvm.ComponentModel;
 using PortraitFinder.Model;
 using PortraitFinder.Model.Enums;
 
 namespace PortraitFinder.App.ViewModels;
 
-public class PortraitViewModel : Portrait, INotifyPropertyChanged
+[ObservableObject]
+public partial class PortraitViewModel : Portrait
 {
     public PortraitViewModel() {}
     public PortraitViewModel(Portrait portrait)
@@ -109,12 +111,8 @@ public class PortraitViewModel : Portrait, INotifyPropertyChanged
         }
     }
 
-
-    public bool IsSelected
-    {
-        get;
-        set { field = value; OnPropertyChanged(); }
-    }
+    [ObservableProperty]
+    private bool isSelected;
     
     public bool HasUnsavedChanges =>
         _originalGender != Gender ||
@@ -129,11 +127,6 @@ public class PortraitViewModel : Portrait, INotifyPropertyChanged
         _originalSurrounding != Surrounding ||
         _originalPlayerClass != PlayerClass ||
         _originalMythicPath != MythicPath;
-
-    public event PropertyChangedEventHandler? PropertyChanged;
-
-    protected void OnPropertyChanged([CallerMemberName] string? name = null, object? sender = null, PropertyChangedEventArgs? e = null) =>
-        PropertyChanged?.Invoke(this, e ?? new PropertyChangedEventArgs(name));
 
     private static BitmapImage? GetImage(string? path, int? size = null)
     {
