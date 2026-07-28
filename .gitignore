@@ -2,6 +2,9 @@
 #
 # Get latest from https://github.com/github/gitignore/blob/main/Unity.gitignore
 #
+# force includes
+!PortraitFinder.App/
+
 /[Ll]ibrary/
 /[Tt]emp/
 /[Oo]bj/
@@ -71,14 +74,3 @@ crashlytics-build.properties
 # Temporary auto-generated Android Assets
 /[Aa]ssets/[Ss]treamingAssets/aa.meta
 /[Aa]ssets/[Ss]treamingAssets/aa/*
-
-# force includes
-!PortraitFinder.App/
-PortraitFinder.App/[Bb]in/*
-PortraitFinder.App/[Oo]bj/*
-PortraitFinder.Data/[Bb]in/*
-PortraitFinder.Data/[Oo]bj/*
-PortraitFinder.Model/[Bb]in/*
-PortraitFinder.Model/[Oo]bj/*
-PortraitFinder.Services/[Bb]in/*
-PortraitFinder.Services/[Oo]bj/*

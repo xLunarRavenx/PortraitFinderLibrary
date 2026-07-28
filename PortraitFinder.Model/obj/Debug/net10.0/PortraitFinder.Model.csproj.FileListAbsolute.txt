@@ -5,6 +5,7 @@ D:\Coding\PortraitFinderLibrary\PortraitFinder.Model\obj\Debug\net10.0\PortraitF
 D:\Coding\PortraitFinderLibrary\PortraitFinder.Model\obj\Debug\net10.0\PortraitFinder.Model.AssemblyInfoInputs.cache
 D:\Coding\PortraitFinderLibrary\PortraitFinder.Model\obj\Debug\net10.0\PortraitFinder.Model.AssemblyInfo.cs
 D:\Coding\PortraitFinderLibrary\PortraitFinder.Model\obj\Debug\net10.0\PortraitFinder.Model.csproj.CoreCompileInputs.cache
+D:\Coding\PortraitFinderLibrary\PortraitFinder.Model\obj\Debug\net10.0\PortraitFinder.Model.sourcelink.json
 D:\Coding\PortraitFinderLibrary\PortraitFinder.Model\obj\Debug\net10.0\PortraitFinder.Model.dll
 D:\Coding\PortraitFinderLibrary\PortraitFinder.Model\obj\Debug\net10.0\refint\PortraitFinder.Model.dll
 D:\Coding\PortraitFinderLibrary\PortraitFinder.Model\obj\Debug\net10.0\PortraitFinder.Model.pdb

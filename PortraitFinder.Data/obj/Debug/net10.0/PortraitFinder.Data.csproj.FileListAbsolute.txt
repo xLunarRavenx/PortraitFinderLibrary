@@ -9,6 +9,7 @@ D:\Coding\PortraitFinderLibrary\PortraitFinder.Data\obj\Debug\net10.0\PortraitFi
 D:\Coding\PortraitFinderLibrary\PortraitFinder.Data\obj\Debug\net10.0\PortraitFinder.Data.AssemblyInfoInputs.cache
 D:\Coding\PortraitFinderLibrary\PortraitFinder.Data\obj\Debug\net10.0\PortraitFinder.Data.AssemblyInfo.cs
 D:\Coding\PortraitFinderLibrary\PortraitFinder.Data\obj\Debug\net10.0\PortraitFinder.Data.csproj.CoreCompileInputs.cache
+D:\Coding\PortraitFinderLibrary\PortraitFinder.Data\obj\Debug\net10.0\PortraitFinder.Data.sourcelink.json
 D:\Coding\PortraitFinderLibrary\PortraitFinder.Data\obj\Debug\net10.0\Portrait.2AFA30DF.Up2Date
 D:\Coding\PortraitFinderLibrary\PortraitFinder.Data\obj\Debug\net10.0\PortraitFinder.Data.dll
 D:\Coding\PortraitFinderLibrary\PortraitFinder.Data\obj\Debug\net10.0\refint\PortraitFinder.Data.dll

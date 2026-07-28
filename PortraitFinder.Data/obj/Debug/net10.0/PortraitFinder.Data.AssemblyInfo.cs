@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("PortraitFinder.Data")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+e7fed0fc97259756f7477276ff0abbbee4207925")]
 [assembly: System.Reflection.AssemblyProductAttribute("PortraitFinder.Data")]
 [assembly: System.Reflection.AssemblyTitleAttribute("PortraitFinder.Data")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
