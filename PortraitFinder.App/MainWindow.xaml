@@ -12,20 +12,6 @@
         SizeChanged="Window_SizeChanged"
 >
     <Window.Resources>
-        <!-- <Style  x:Key="ThumbnailToggleStyle" TargetType="ToggleButton">
-            <Setter Property="Background" Value="Transparent"/>
-            <Setter Property="BorderThickness" Value="0"/>
-            <Setter Property="Padding" Value="0"/>
-
-            <Style.Triggers>
-                <Trigger Property="IsMouseOver" Value="True">
-                    <Setter Property="Background" Value="#081a2a"/>
-                </Trigger>
-                <Trigger Property="IsChecked" Value="True">
-                    <Setter Property="Background" Value="#102e4a"/>
-                </Trigger>
-            </Style.Triggers>
-        </Style> -->
         <Style x:Key="ThumbnailToggleStyle" TargetType="ToggleButton">
             <Setter Property="Template">
                 <Setter.Value>
@@ -65,7 +51,6 @@
         </Style>
     </Window.Resources>
 
-
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="270"/>
@@ -74,22 +59,23 @@
 
         <ScrollViewer Name="ScrollViewerFilters" Grid.Column="0">
             <StackPanel Orientation="Vertical">
-                <!-- TODO:
-                    * convert the expanders to be templated(?) to use the groups from the ViewModel
-                    * use bindings to update the view model or update the checkboxes when the view model changes
-                    * consider a search bar for each expander for filtering the checkboxes
-                    * consider add a max height and scrolling for the expanders to consolidate screenspace
-                        * alternate:
-                            grid splitters on the expanders' expanded panel so the user can resize them.
-                            make sure there is a min height so they don't collapse to nothing
-                    * consider a single "untagged" checkbox in the filters to uncheck all the expander checkboxes and find only portraits with nothing set yet
+                <!--
+                 TODO:
                     * add a "reset" button to reset the filters
-                    * replace the placeholders to use bindings, especially for the images
+                    * only display details tags when there are any
+                    *    how to handle multiple portraits selected with differing tags?
+                    * new window for EDITING selected portrait(s) tags
+                 CONSIDER:
+                    * toggle on each filter to be AND vs OR
+                      eg Race:Elf + Race:Orc ->
+                        AND -> portrait must have BOTH Race:Elf and Race:Orc set
+                        OR ->  portrait must have AT LEAST ONE OF Race:Elf and Race:Orc set
+                      (this may seem a silly distinction on race but may be more relevant for something like HairColor, Weapon, or even PlayerClass)
                 -->
                 <TextBlock Text="Filters" FontWeight="Bold" FontSize="16" Margin="10,5,0,5"/>
                 <Expander Name="GenderExpander" Header="Gender" IsExpanded="False">
                     <StackPanel Orientation="Vertical">
-                        <ItemsControl ItemsSource="{Binding Gender.Options}">
+                        <ItemsControl ItemsSource="{Binding Filters.Gender.Options}">
                             <ItemsControl.ItemTemplate>
                                 <DataTemplate>
                                     <CheckBox
@@ -102,7 +88,7 @@
                 </Expander>
                 <Expander Name="RaceExpander" Header="Race" IsExpanded="False">
                     <StackPanel Orientation="Vertical">
-                        <ItemsControl ItemsSource="{Binding Race.Options}">
+                        <ItemsControl ItemsSource="{Binding Filters.Race.Options}">
                             <ItemsControl.ItemTemplate>
                                 <DataTemplate>
                                     <CheckBox
@@ -115,7 +101,7 @@
                 </Expander>
                 <Expander Name="HairColorExpander" Header="Hair Color" IsExpanded="False">
                     <StackPanel Orientation="Vertical">
-                        <ItemsControl ItemsSource="{Binding HairColor.Options}">
+                        <ItemsControl ItemsSource="{Binding Filters.HairColor.Options}">
                             <ItemsControl.ItemTemplate>
                                 <DataTemplate>
                                     <CheckBox
@@ -128,7 +114,7 @@
                 </Expander>
                 <Expander Name="HairLengthExpander" Header="Hair Length" IsExpanded="False">
                     <StackPanel Orientation="Vertical">
-                        <ItemsControl ItemsSource="{Binding HairLength.Options}">
+                        <ItemsControl ItemsSource="{Binding Filters.HairLength.Options}">
                             <ItemsControl.ItemTemplate>
                                 <DataTemplate>
                                     <CheckBox
@@ -141,7 +127,7 @@
                 </Expander>
                 <Expander Name="HeadFeatureExpander" Header="Head Features" IsExpanded="False">
                     <StackPanel Orientation="Vertical">
-                        <ItemsControl ItemsSource="{Binding HeadFeature.Options}">
+                        <ItemsControl ItemsSource="{Binding Filters.HeadFeature.Options}">
                             <ItemsControl.ItemTemplate>
                                 <DataTemplate>
                                     <CheckBox
@@ -154,12 +140,15 @@
                 </Expander>
                 <Expander Name="WingExpander" Header="Wings" IsExpanded="False">
                     <StackPanel Orientation="Vertical">
-                        <ItemsControl ItemsSource="{Binding Wing.Options}">
+                        <ItemsControl ItemsSource="{Binding Filters.Wing.Options}">
                             <ItemsControl.ItemTemplate>
                                 <DataTemplate>
                                     <CheckBox
                                         Content="{Binding Name}"
-                                        IsChecked="{Binding IsSelected}" />
+                                        IsChecked="{Binding IsSelected, Mode=TwoWay}"
+                                        ToolTip="{Binding Value}"
+                                        Tag="{Binding}"
+                                    />
                                 </DataTemplate>
                             </ItemsControl.ItemTemplate>
                         </ItemsControl>
@@ -167,7 +156,7 @@
                 </Expander>
                 <Expander Name="WeaponExpander" Header="Weapon" IsExpanded="False">
                     <StackPanel Orientation="Vertical">
-                        <ItemsControl ItemsSource="{Binding Weapon.Options}">
+                        <ItemsControl ItemsSource="{Binding Filters.Weapon.Options}">
                             <ItemsControl.ItemTemplate>
                                 <DataTemplate>
                                     <CheckBox
@@ -180,7 +169,7 @@
                 </Expander>
                 <Expander Name="ArmorExpander" Header="Armor" IsExpanded="False">
                     <StackPanel Orientation="Vertical">
-                        <ItemsControl ItemsSource="{Binding Armor.Options}">
+                        <ItemsControl ItemsSource="{Binding Filters.Armor.Options}">
                             <ItemsControl.ItemTemplate>
                                 <DataTemplate>
                                     <CheckBox
@@ -193,7 +182,7 @@
                 </Expander>
                 <Expander Name="CompanionExpander" Header="Companion" IsExpanded="False">
                     <StackPanel Orientation="Vertical">
-                        <ItemsControl ItemsSource="{Binding Companion.Options}">
+                        <ItemsControl ItemsSource="{Binding Filters.Companion.Options}">
                             <ItemsControl.ItemTemplate>
                                 <DataTemplate>
                                     <CheckBox
@@ -206,7 +195,7 @@
                 </Expander>
                 <Expander Name="SurroundingExpander" Header="Surroundings" IsExpanded="False">
                     <StackPanel Orientation="Vertical">
-                        <ItemsControl ItemsSource="{Binding Surrounding.Options}">
+                        <ItemsControl ItemsSource="{Binding Filters.Surrounding.Options}">
                             <ItemsControl.ItemTemplate>
                                 <DataTemplate>
                                     <CheckBox
@@ -219,7 +208,7 @@
                 </Expander>
                 <Expander Name="PlayerClassExpander" Header="Class" IsExpanded="False">
                     <StackPanel Orientation="Vertical">
-                        <ItemsControl ItemsSource="{Binding PlayerClass.Options}">
+                        <ItemsControl ItemsSource="{Binding Filters.PlayerClass.Options}">
                             <ItemsControl.ItemTemplate>
                                 <DataTemplate>
                                     <CheckBox
@@ -232,7 +221,7 @@
                 </Expander>
                 <Expander Name="MythicPathExpander" Header="Mythic Path" IsExpanded="False">
                     <StackPanel Orientation="Vertical">
-                        <ItemsControl ItemsSource="{Binding MythicPath.Options}">
+                        <ItemsControl ItemsSource="{Binding Filters.MythicPath.Options}">
                             <ItemsControl.ItemTemplate>
                                 <DataTemplate>
                                     <CheckBox

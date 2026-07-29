@@ -1,6 +1,5 @@
-﻿using System.IO;
+﻿using System.Runtime.CompilerServices;
 using System.Windows;
-using System.Windows.Input;
 using Microsoft.Extensions.Logging;
 using PortraitFinder.App.ViewModels;
 using PortraitFinder.Services;
@@ -28,49 +27,47 @@ public partial class MainWindow : Window
 
         DataContext = _mainViewModel;
 
+        _mainViewModel.VisiblePortraitsChanged += portraits => RecalculatePortraitRows("trigger", portraits);
+
         _log.LogInformation("Finished initializing MainWindow.");
     }
 
     private async void MainWindow_Loaded(object sender, RoutedEventArgs e)
     {
         _mainViewModel.AllPortraits = [.. (await _db.GetAllPortraits(true)).Select(x => new PortraitViewModel(x))];
+        _mainViewModel.VisiblePortraits.AddRange(_mainViewModel.AllPortraits);
 
         _log.LogInformation("Finished loading images from the db.");
 
-        RecalculatePortraitRows();
+        RecalculatePortraitRows(nameof(MainWindow_Loaded), _mainViewModel.VisiblePortraits);
 
         _log.LogInformation("Finished rendering images .");
-
     }  
 
     private void Window_SizeChanged(object sender, SizeChangedEventArgs e)
     {
-        if (_mainViewModel.AllPortraits.Count == 0)
-        {
-            return; 
-        }
-        RecalculatePortraitRows();
+        RecalculatePortraitRows(nameof(Window_SizeChanged), _mainViewModel.VisiblePortraits);
     }
 
-    private void RecalculatePortraitRows()
+    private void RecalculatePortraitRows([CallerMemberName] string caller = "", IEnumerable<PortraitViewModel>? visiblePortraits = null)
     {
         double availableWidth = PortraitsListBox.ActualWidth - ThumbnailScrollViewScrollbarWitdh;
-        if (availableWidth <= 0)
+        if (visiblePortraits == null || availableWidth <= 0)
         {
-            _log.LogInformation("no images found....");
+            _log.LogInformation("{caller} | no images found....", caller);
             return;
         }
 
         var columns = (int)Math.Max(1, Math.Floor(availableWidth / ThumbnailWidth));
 
-        _log.LogInformation("Should make {columns} columns", columns);
+        _log.LogInformation("{caller} | Should make {columns} columns", caller, columns);
 
         _mainViewModel.PortraitRows.Clear();
-        for (int i = 0; i < _mainViewModel.AllPortraits.Count; i += columns)
+        for (int i = 0; i < visiblePortraits.Count(); i += columns)
         {
             _mainViewModel.PortraitRows.Add(new ThumbnailRowViewModel 
             { 
-                RowThumbnails = [.. _mainViewModel.AllPortraits.Skip(i).Take(columns)]
+                RowThumbnails = [.. visiblePortraits.Skip(i).Take(columns)]
             });
         }
     }

@@ -1,34 +1,41 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
-using PortraitFinder.Model;
+﻿using System.ComponentModel;
+using CommunityToolkit.Mvvm.ComponentModel;
 using PortraitFinder.Model.Enums;
-using System.Collections.ObjectModel;
 
 namespace PortraitFinder.App.ViewModels;
 
-public class FiltersViewModel : ObservableObject
+public partial class FiltersViewModel : ObservableObject
 {
-    public Filters Filters { get; }
-
-    public ObservableCollection<FlagEnumViewModelBase> Groups { get;  }
+    public event EventHandler? FiltersChanged;
 
     public FiltersViewModel()
     {
-        Filters = new Filters();
-
-        Groups =
-        [
-            new FlagEnumViewModel<Gender>("Gender", () => Filters.Gender, value => Filters.Gender = value),
-            new FlagEnumViewModel<Race>("Race", () => Filters.Race, value => Filters.Race = value),
-            new FlagEnumViewModel<HairColor>("HairColor", () => Filters.HairColor, value => Filters.HairColor = value),
-            new FlagEnumViewModel<HairLength>("HairLength", () => Filters.HairLength, value => Filters.HairLength = value),
-            new FlagEnumViewModel<HeadFeature>("HeadFeature", () => Filters.HeadFeature, value => Filters.HeadFeature = value),
-            new FlagEnumViewModel<Wing>("Wing", () => Filters.Wing, value => Filters.Wing = value),
-            new FlagEnumViewModel<Weapon>("Weapon", () => Filters.Weapon, value => Filters.Weapon = value),
-            new FlagEnumViewModel<Armor>("Armor", () => Filters.Armor, value => Filters.Armor = value),
-            new FlagEnumViewModel<Companion>("Companion", () => Filters.Companion, value => Filters.Companion = value),
-            new FlagEnumViewModel<Surrounding>("Surrounding", () => Filters.Surrounding, value => Filters.Surrounding = value),
-            new FlagEnumViewModel<PlayerClass>("PlayerClass", () => Filters.PlayerClass, value => Filters.PlayerClass = value),
-            new FlagEnumViewModel<MythicPath>("MythicPath", () => Filters.MythicPath, value => Filters.MythicPath = value)
-        ];
+        Armor.PropertyChanged += OnAnyFilterChanged;
+        Companion.PropertyChanged += OnAnyFilterChanged;
+        Gender.PropertyChanged += OnAnyFilterChanged;
+        HairColor.PropertyChanged += OnAnyFilterChanged;
+        HairLength.PropertyChanged += OnAnyFilterChanged;
+        HeadFeature.PropertyChanged += OnAnyFilterChanged;
+        MythicPath.PropertyChanged += OnAnyFilterChanged;
+        PlayerClass.PropertyChanged += OnAnyFilterChanged;
+        Race.PropertyChanged += OnAnyFilterChanged;
+        Surrounding.PropertyChanged += OnAnyFilterChanged;
+        Weapon.PropertyChanged += OnAnyFilterChanged;
+        Wing.PropertyChanged += OnAnyFilterChanged;
     }
+
+    private void OnAnyFilterChanged(object? sender, PropertyChangedEventArgs e) => FiltersChanged?.Invoke(this, EventArgs.Empty);
+
+    [ObservableProperty] private FlagCollection<Armor> armor = new();
+    [ObservableProperty] private FlagCollection<Companion> companion = new();
+    [ObservableProperty] private FlagCollection<Gender> gender = new();
+    [ObservableProperty] private FlagCollection<HairColor> hairColor = new();
+    [ObservableProperty] private FlagCollection<HairLength> hairLength = new();
+    [ObservableProperty] private FlagCollection<HeadFeature> headFeature = new();
+    [ObservableProperty] private FlagCollection<MythicPath> mythicPath = new();
+    [ObservableProperty] private FlagCollection<PlayerClass> playerClass = new();
+    [ObservableProperty] private FlagCollection<Race> race = new();
+    [ObservableProperty] private FlagCollection<Surrounding> surrounding = new();
+    [ObservableProperty] private FlagCollection<Weapon> weapon = new();
+    [ObservableProperty] private FlagCollection<Wing> wing = new();
 }

@@ -2,8 +2,6 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using PortraitFinder.Model.Enums;
 using System.Collections.ObjectModel;
-using System.Collections.Specialized;
-using System.ComponentModel;
 using System.Reflection;
 using System.Windows.Input;
 using System.Windows.Media.Imaging;
@@ -12,111 +10,49 @@ namespace PortraitFinder.App.ViewModels;
 
 public partial class MainViewModel: ObservableObject
 {
+    public MainViewModel()
+    {
+        Filters.FiltersChanged += (_, _) => RefreshVisiblePortraits();
+    }
+
+    public event Action<IEnumerable<PortraitViewModel>>? VisiblePortraitsChanged;    
+
     public ObservableCollection<PortraitViewModel> AllPortraits { get; set; } = [];
     public IEnumerable<PortraitViewModel> SelectedPortraits => [.. AllPortraits.Where(p => p.IsSelected)];
-
+    public List<PortraitViewModel> VisiblePortraits { get; set; } = [];
     public ObservableCollection<ThumbnailRowViewModel> PortraitRows { get; } = [];
     private PortraitViewModel? _anchorSelection;
-    
-#region filter flags
 
     [ObservableProperty]
-    private FlagCollection<Armor> armor = new();
-    partial void OnArmorChanged(FlagCollection<Armor> value)
+    private FiltersViewModel filters = new();
+    public void RefreshVisiblePortraits()
     {
-        foreach(var option in armor.Options)
-            option.Refresh();
+        VisiblePortraits.Clear();
+        VisiblePortraits.AddRange([.. AllPortraits.Where(p => 
+            FilterMatchesPortraitOrNotSet(Filters.Armor, p.Armor)
+            && FilterMatchesPortraitOrNotSet(Filters.Companion, p.Companion)
+            && FilterMatchesPortraitOrNotSet(Filters.Gender, p.Gender)
+            && FilterMatchesPortraitOrNotSet(Filters.HairColor, p.HairColor)
+            && FilterMatchesPortraitOrNotSet(Filters.HairLength, p.HairLength)
+            && FilterMatchesPortraitOrNotSet(Filters.HeadFeature, p.HeadFeature)
+            && FilterMatchesPortraitOrNotSet(Filters.MythicPath, p.MythicPath)
+            && FilterMatchesPortraitOrNotSet(Filters.PlayerClass, p.PlayerClass)
+            && FilterMatchesPortraitOrNotSet(Filters.Race, p.Race)
+            && FilterMatchesPortraitOrNotSet(Filters.Surrounding, p.Surrounding)
+            && FilterMatchesPortraitOrNotSet(Filters.Weapon, p.Weapon)
+            && FilterMatchesPortraitOrNotSet(Filters.Wing, p.Wing)
+        )]);
+        OnPropertyChanged(nameof(VisiblePortraits));
+        VisiblePortraitsChanged?.Invoke(VisiblePortraits);
     }
 
-    [ObservableProperty]
-    private FlagCollection<Companion> companion = new();
-    partial void OnCompanionChanged(FlagCollection<Companion> value)
+    private static bool FilterMatchesPortraitOrNotSet<T>(FlagCollection<T> filter, T portraitValue) where T : struct, Enum
     {
-        foreach(var option in companion.Options)
-            option.Refresh();
+
+        return filter.Flags.Equals(default(T))
+            || filter.Flags.And(portraitValue).Equals(filter.Flags);
     }
 
-    [ObservableProperty]
-    private FlagCollection<Gender> gender = new();
-    partial void OnGenderChanged(FlagCollection<Gender> value)
-    {
-        foreach(var option in gender.Options)
-            option.Refresh();
-    }
-
-    [ObservableProperty]
-    private FlagCollection<HairColor> hairColor = new();
-    partial void OnHairColorChanged(FlagCollection<HairColor> value)
-    {
-        foreach(var option in hairColor.Options)
-            option.Refresh();
-    }
-
-    [ObservableProperty]
-    private FlagCollection<HairLength> hairLength = new();
-    partial void OnHairLengthChanged(FlagCollection<HairLength> value)
-    {
-        foreach(var option in hairLength.Options)
-            option.Refresh();
-    }
-
-    [ObservableProperty]
-    private FlagCollection<HeadFeature> headFeature = new();
-    partial void OnHeadFeatureChanged(FlagCollection<HeadFeature> value)
-    {
-        foreach(var option in headFeature.Options)
-            option.Refresh();
-    }
-
-    [ObservableProperty]
-    private FlagCollection<MythicPath> mythicPath = new();
-    partial void OnMythicPathChanged(FlagCollection<MythicPath> value)
-    {
-        foreach(var option in mythicPath.Options)
-            option.Refresh();
-    }
-
-    [ObservableProperty]
-    private FlagCollection<PlayerClass> playerClass = new();
-    partial void OnPlayerClassChanged(FlagCollection<PlayerClass> value)
-    {
-        foreach(var option in playerClass.Options)
-            option.Refresh();
-    }
-
-    [ObservableProperty]
-    private FlagCollection<Race> race = new();
-    partial void OnRaceChanged(FlagCollection<Race> value)
-    {
-        foreach(var option in race.Options)
-            option.Refresh();
-    }
-
-    [ObservableProperty]
-    private FlagCollection<Surrounding> surrounding = new();
-    partial void OnSurroundingChanged(FlagCollection<Surrounding> value)
-    {
-        foreach(var option in surrounding.Options)
-            option.Refresh();
-    }
-
-    [ObservableProperty]
-    private FlagCollection<Weapon> weapon = new();
-    partial void OnWeaponChanged(FlagCollection<Weapon> value)
-    {
-        foreach(var option in weapon.Options)
-            option.Refresh();
-    }
-
-    [ObservableProperty]
-    private FlagCollection<Wing> wing = new();
-    partial void OnWingChanged(FlagCollection<Wing> value)
-    {
-        foreach(var option in wing.Options)
-            option.Refresh();
-    }
-
-#endregion filter flags
 
 #region selectedFlags
 
@@ -245,6 +181,8 @@ public partial class MainViewModel: ObservableObject
     [RelayCommand]
     public void SelectPortrait(PortraitViewModel? clicked)
     {
+        /* todo: handle visible portraits vs all portraits */
+
         bool ctrl = Keyboard.Modifiers.HasFlag(ModifierKeys.Control);
         bool shift = Keyboard.Modifiers.HasFlag(ModifierKeys.Shift);
 
@@ -302,26 +240,6 @@ public partial class MainViewModel: ObservableObject
         OnPropertyChanged(nameof(SelectedSmallPortrait));
         OnPropertyChanged(nameof(SelectedMediumPortrait));
         OnPropertyChanged(nameof(SelectedFullLengthPortrait));
-    }
-
-    private void OnPortraitsCollectionChanged(object? sender = null, NotifyCollectionChangedEventArgs? e = null)
-    {
-        if (e?.NewItems != null)
-        {
-            foreach (PortraitViewModel item in e.NewItems)
-                item.PropertyChanged += OnPortraitPropertyChanged;
-        }
-        if (e?.OldItems != null)
-        {
-            foreach (PortraitViewModel item in e.OldItems)
-                item.PropertyChanged -= OnPortraitPropertyChanged;
-        }
-    }
-
-    private void OnPortraitPropertyChanged(object? sender = null, PropertyChangedEventArgs? e = null)
-    {
-        // An item's property changed; handle notification here
-        OnPropertyChanged(nameof(PortraitRows));
     }
 
 #region DetailsPortrait props
@@ -434,5 +352,4 @@ public partial class MainViewModel: ObservableObject
     }
 
 #endregion DetailsPortrait props
-
 }
