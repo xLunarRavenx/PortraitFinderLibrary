@@ -70,16 +70,9 @@
                 <StackPanel Orientation="Vertical" Focusable="False">
                     <!--
                     TODO:
-                        * add a "reset" button to reset the filters
                         * only display details tags when there are any
                         *    how to handle multiple portraits selected with differing tags?
                         * new window for EDITING selected portrait(s) tags
-                    CONSIDER:
-                        * toggle on each filter to be AND vs OR
-                        eg Race:Elf + Race:Orc ->
-                            AND -> portrait must have BOTH Race:Elf and Race:Orc set
-                            OR ->  portrait must have AT LEAST ONE OF Race:Elf and Race:Orc set
-                        (this may seem a silly distinction on race but may be more relevant for something like HairColor, Weapon, or even PlayerClass)
                     -->
                     <TextBlock Text="Filters" FontWeight="Bold" FontSize="16" Margin="10,5,0,5"/>
                     <Expander Name="GenderExpander" IsExpanded="False" Focusable="False">

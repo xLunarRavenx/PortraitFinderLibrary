@@ -73,6 +73,16 @@ public partial class MainWindow : Window
                 RowThumbnails = [.. visiblePortraits.Skip(i).Take(columns)]
             });
         }
+
+        if (_mainViewModel.SelectedPortraits.Count() == 0)
+        {
+            PortraitsListBox.ScrollIntoView(_mainViewModel.PortraitRows.FirstOrDefault());
+        }
+        else
+        {
+            var firstSelectedPortraitId = _mainViewModel.SelectedPortraits.First().Id;
+            PortraitsListBox.ScrollIntoView(_mainViewModel.PortraitRows.FirstOrDefault(row => row.RowThumbnails.Any(x => x.Id == firstSelectedPortraitId)));
+        }
     }
 
 }

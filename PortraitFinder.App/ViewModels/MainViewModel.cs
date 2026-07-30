@@ -42,6 +42,9 @@ public partial class MainViewModel: ObservableObject
             && FilterMatchesPortraitOrNotSet(Filters.Weapon, p.Weapon)
             && FilterMatchesPortraitOrNotSet(Filters.Wing, p.Wing)
         )]);
+
+        ApplyFilterToSelectedPortraits();
+
         OnPropertyChanged(nameof(VisiblePortraits));
         VisiblePortraitsChanged?.Invoke(VisiblePortraits);
     }
@@ -59,6 +62,19 @@ public partial class MainViewModel: ObservableObject
             || (!filter.RequireAll && !filter.Flags.And(portraitValue).Equals(default(T)));
     }
 
+    private void ApplyFilterToSelectedPortraits()
+    {
+        foreach (var portrait in AllPortraits.Except(VisiblePortraits))
+        {
+            if (portrait.IsSelected)
+            {
+                portrait.IsSelected = false;
+            }
+        }
+        OnPropertyChanged(nameof(SelectedSmallPortrait));
+        OnPropertyChanged(nameof(SelectedMediumPortrait));
+        OnPropertyChanged(nameof(SelectedFullLengthPortrait));
+    }
 
 #region selectedFlags
 
