@@ -24,6 +24,22 @@ public partial class FiltersViewModel : ObservableObject
         Wing.PropertyChanged += OnAnyFilterChanged;
     }
 
+    public void Reset()
+    {
+        Armor.Flags = Model.Enums.Armor.Unset;
+        Companion.Flags = Model.Enums.Companion.Unset;
+        Gender.Flags = Model.Enums.Gender.Unset;
+        HairColor.Flags = Model.Enums.HairColor.Unset;
+        HairLength.Flags = Model.Enums.HairLength.Unset;
+        HeadFeature.Flags = Model.Enums.HeadFeature.Unset;
+        MythicPath.Flags = Model.Enums.MythicPath.Unset;
+        PlayerClass.Flags = Model.Enums.PlayerClass.Unset;
+        Race.Flags = Model.Enums.Race.Unset;
+        Surrounding.Flags = Model.Enums.Surrounding.Unset;
+        Weapon.Flags = Model.Enums.Weapon.Unset;
+        Wing.Flags = Model.Enums.Wing.Unset;
+    }
+
     private void OnAnyFilterChanged(object? sender, PropertyChangedEventArgs e) => FiltersChanged?.Invoke(this, EventArgs.Empty);
 
     [ObservableProperty] private FlagCollection<Armor> armor = new();

@@ -46,11 +46,17 @@ public partial class MainViewModel: ObservableObject
         VisiblePortraitsChanged?.Invoke(VisiblePortraits);
     }
 
+    public void ResetFilters()
+    {
+        Filters.Reset();
+    }
+
     private static bool FilterMatchesPortraitOrNotSet<T>(FlagCollection<T> filter, T portraitValue) where T : struct, Enum
     {
 
         return filter.Flags.Equals(default(T))
-            || filter.Flags.And(portraitValue).Equals(filter.Flags);
+            || (filter.RequireAll && filter.Flags.And(portraitValue).Equals(filter.Flags))
+            || (!filter.RequireAll && !filter.Flags.And(portraitValue).Equals(default(T)));
     }
 
 

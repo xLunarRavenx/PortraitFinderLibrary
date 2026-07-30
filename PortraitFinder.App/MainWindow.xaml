@@ -5,6 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PortraitFinder.App"
         xmlns:model="clr-namespace:PortraitFinder.App.ViewModels"
+        xmlns:controls="clr-namespace:PortraitFinder.App.UserControls"
         mc:Ignorable="d"
         Title="Portrait Finder"
         Width="1700"
@@ -49,6 +50,10 @@
                 </Setter.Value>
             </Setter>
         </Style>
+
+        <Style TargetType="ScrollViewer">
+            <Setter Property="FocusVisualStyle" Value="{x:Null}" />
+        </Style>
     </Window.Resources>
 
     <Grid>
@@ -57,184 +62,347 @@
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
 
-        <ScrollViewer Name="ScrollViewerFilters" Grid.Column="0">
-            <StackPanel Orientation="Vertical">
-                <!--
-                 TODO:
-                    * add a "reset" button to reset the filters
-                    * only display details tags when there are any
-                    *    how to handle multiple portraits selected with differing tags?
-                    * new window for EDITING selected portrait(s) tags
-                 CONSIDER:
-                    * toggle on each filter to be AND vs OR
-                      eg Race:Elf + Race:Orc ->
-                        AND -> portrait must have BOTH Race:Elf and Race:Orc set
-                        OR ->  portrait must have AT LEAST ONE OF Race:Elf and Race:Orc set
-                      (this may seem a silly distinction on race but may be more relevant for something like HairColor, Weapon, or even PlayerClass)
-                -->
-                <TextBlock Text="Filters" FontWeight="Bold" FontSize="16" Margin="10,5,0,5"/>
-                <Expander Name="GenderExpander" Header="Gender" IsExpanded="False">
-                    <StackPanel Orientation="Vertical">
-                        <ItemsControl ItemsSource="{Binding Filters.Gender.Options}">
-                            <ItemsControl.ItemTemplate>
-                                <DataTemplate>
-                                    <CheckBox
-                                        Content="{Binding Name}"
-                                        IsChecked="{Binding IsSelected}" />
-                                </DataTemplate>
-                            </ItemsControl.ItemTemplate>
-                        </ItemsControl>
-                    </StackPanel>
-                </Expander>
-                <Expander Name="RaceExpander" Header="Race" IsExpanded="False">
-                    <StackPanel Orientation="Vertical">
-                        <ItemsControl ItemsSource="{Binding Filters.Race.Options}">
-                            <ItemsControl.ItemTemplate>
-                                <DataTemplate>
-                                    <CheckBox
-                                        Content="{Binding Name}"
-                                        IsChecked="{Binding IsSelected}" />
-                                </DataTemplate>
-                            </ItemsControl.ItemTemplate>
-                        </ItemsControl>
-                    </StackPanel>
-                </Expander>
-                <Expander Name="HairColorExpander" Header="Hair Color" IsExpanded="False">
-                    <StackPanel Orientation="Vertical">
-                        <ItemsControl ItemsSource="{Binding Filters.HairColor.Options}">
-                            <ItemsControl.ItemTemplate>
-                                <DataTemplate>
-                                    <CheckBox
-                                        Content="{Binding Name}"
-                                        IsChecked="{Binding IsSelected}" />
-                                </DataTemplate>
-                            </ItemsControl.ItemTemplate>
-                        </ItemsControl>
-                    </StackPanel>
-                </Expander>
-                <Expander Name="HairLengthExpander" Header="Hair Length" IsExpanded="False">
-                    <StackPanel Orientation="Vertical">
-                        <ItemsControl ItemsSource="{Binding Filters.HairLength.Options}">
-                            <ItemsControl.ItemTemplate>
-                                <DataTemplate>
-                                    <CheckBox
-                                        Content="{Binding Name}"
-                                        IsChecked="{Binding IsSelected}" />
-                                </DataTemplate>
-                            </ItemsControl.ItemTemplate>
-                        </ItemsControl>
-                    </StackPanel>
-                </Expander>
-                <Expander Name="HeadFeatureExpander" Header="Head Features" IsExpanded="False">
-                    <StackPanel Orientation="Vertical">
-                        <ItemsControl ItemsSource="{Binding Filters.HeadFeature.Options}">
-                            <ItemsControl.ItemTemplate>
-                                <DataTemplate>
-                                    <CheckBox
-                                        Content="{Binding Name}"
-                                        IsChecked="{Binding IsSelected}" />
-                                </DataTemplate>
-                            </ItemsControl.ItemTemplate>
-                        </ItemsControl>
-                    </StackPanel>
-                </Expander>
-                <Expander Name="WingExpander" Header="Wings" IsExpanded="False">
-                    <StackPanel Orientation="Vertical">
-                        <ItemsControl ItemsSource="{Binding Filters.Wing.Options}">
-                            <ItemsControl.ItemTemplate>
-                                <DataTemplate>
-                                    <CheckBox
-                                        Content="{Binding Name}"
-                                        IsChecked="{Binding IsSelected, Mode=TwoWay}"
-                                        ToolTip="{Binding Value}"
-                                        Tag="{Binding}"
-                                    />
-                                </DataTemplate>
-                            </ItemsControl.ItemTemplate>
-                        </ItemsControl>
-                    </StackPanel>
-                </Expander>
-                <Expander Name="WeaponExpander" Header="Weapon" IsExpanded="False">
-                    <StackPanel Orientation="Vertical">
-                        <ItemsControl ItemsSource="{Binding Filters.Weapon.Options}">
-                            <ItemsControl.ItemTemplate>
-                                <DataTemplate>
-                                    <CheckBox
-                                        Content="{Binding Name}"
-                                        IsChecked="{Binding IsSelected}" />
-                                </DataTemplate>
-                            </ItemsControl.ItemTemplate>
-                        </ItemsControl>
-                    </StackPanel>
-                </Expander>
-                <Expander Name="ArmorExpander" Header="Armor" IsExpanded="False">
-                    <StackPanel Orientation="Vertical">
-                        <ItemsControl ItemsSource="{Binding Filters.Armor.Options}">
-                            <ItemsControl.ItemTemplate>
-                                <DataTemplate>
-                                    <CheckBox
-                                        Content="{Binding Name}"
-                                        IsChecked="{Binding IsSelected}" />
-                                </DataTemplate>
-                            </ItemsControl.ItemTemplate>
-                        </ItemsControl>
-                    </StackPanel>
-                </Expander>
-                <Expander Name="CompanionExpander" Header="Companion" IsExpanded="False">
-                    <StackPanel Orientation="Vertical">
-                        <ItemsControl ItemsSource="{Binding Filters.Companion.Options}">
-                            <ItemsControl.ItemTemplate>
-                                <DataTemplate>
-                                    <CheckBox
-                                        Content="{Binding Name}"
-                                        IsChecked="{Binding IsSelected}" />
-                                </DataTemplate>
-                            </ItemsControl.ItemTemplate>
-                        </ItemsControl>
-                    </StackPanel>
-                </Expander>
-                <Expander Name="SurroundingExpander" Header="Surroundings" IsExpanded="False">
-                    <StackPanel Orientation="Vertical">
-                        <ItemsControl ItemsSource="{Binding Filters.Surrounding.Options}">
-                            <ItemsControl.ItemTemplate>
-                                <DataTemplate>
-                                    <CheckBox
-                                        Content="{Binding Name}"
-                                        IsChecked="{Binding IsSelected}" />
-                                </DataTemplate>
-                            </ItemsControl.ItemTemplate>
-                        </ItemsControl>
-                    </StackPanel>
-                </Expander>
-                <Expander Name="PlayerClassExpander" Header="Class" IsExpanded="False">
-                    <StackPanel Orientation="Vertical">
-                        <ItemsControl ItemsSource="{Binding Filters.PlayerClass.Options}">
-                            <ItemsControl.ItemTemplate>
-                                <DataTemplate>
-                                    <CheckBox
-                                        Content="{Binding Name}"
-                                        IsChecked="{Binding IsSelected}" />
-                                </DataTemplate>
-                            </ItemsControl.ItemTemplate>
-                        </ItemsControl>
-                    </StackPanel>
-                </Expander>
-                <Expander Name="MythicPathExpander" Header="Mythic Path" IsExpanded="False">
-                    <StackPanel Orientation="Vertical">
-                        <ItemsControl ItemsSource="{Binding Filters.MythicPath.Options}">
-                            <ItemsControl.ItemTemplate>
-                                <DataTemplate>
-                                    <CheckBox
-                                        Content="{Binding Name}"
-                                        IsChecked="{Binding IsSelected}" />
-                                </DataTemplate>
-                            </ItemsControl.ItemTemplate>
-                        </ItemsControl>
-                    </StackPanel>
-                </Expander>
-            </StackPanel>
-        </ScrollViewer>
-        
+        <DockPanel Grid.Column="0" LastChildFill="true">
+            <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch" DockPanel.Dock="Bottom" Margin="0,0,0,15">
+                <Button x:Name="ResetFiltersButton" Content="Reset Filters" Click="ResetFiltersButton_Click" Width="100" HorizontalAlignment="Right" Focusable="False"/>
+            </Grid>
+            <ScrollViewer Name="ScrollViewerFilters" DockPanel.Dock="Top" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Margin="10,10,0,15" Focusable="False">
+                <StackPanel Orientation="Vertical" Focusable="False">
+                    <!--
+                    TODO:
+                        * add a "reset" button to reset the filters
+                        * only display details tags when there are any
+                        *    how to handle multiple portraits selected with differing tags?
+                        * new window for EDITING selected portrait(s) tags
+                    CONSIDER:
+                        * toggle on each filter to be AND vs OR
+                        eg Race:Elf + Race:Orc ->
+                            AND -> portrait must have BOTH Race:Elf and Race:Orc set
+                            OR ->  portrait must have AT LEAST ONE OF Race:Elf and Race:Orc set
+                        (this may seem a silly distinction on race but may be more relevant for something like HairColor, Weapon, or even PlayerClass)
+                    -->
+                    <TextBlock Text="Filters" FontWeight="Bold" FontSize="16" Margin="10,5,0,5"/>
+                    <Expander Name="GenderExpander" IsExpanded="False" Focusable="False">
+                        <Expander.Header>
+                            <DockPanel LastChildFill="False">
+                                <TextBlock VerticalAlignment="Center" Text="Gender" />
+                                <controls:LabeledToggleSwitch
+                                    DockPanel.Dock="Right"
+                                    Margin="10,0,0,0"
+                                    CheckedText="All"
+                                    UncheckedText="Any"
+                                    IsChecked="{Binding Filters.Gender.RequireAll}"
+                                />
+                            </DockPanel>
+                        </Expander.Header>
+
+                        <StackPanel Orientation="Vertical">
+                            <ItemsControl ItemsSource="{Binding Filters.Gender.Options}">
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate>
+                                        <CheckBox
+                                            Content="{Binding Name}"
+                                            IsChecked="{Binding IsSelected}"
+                                            Focusable="False"
+                                        />
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+                            </ItemsControl>
+                        </StackPanel>
+                    </Expander>
+                    <Expander Name="RaceExpander" IsExpanded="False">
+                        <Expander.Header>
+                            <DockPanel LastChildFill="False">
+                                <TextBlock VerticalAlignment="Center" Text="Race" />
+                                <controls:LabeledToggleSwitch
+                                    DockPanel.Dock="Right"
+                                    Margin="10,0,0,0"
+                                    CheckedText="All"
+                                    UncheckedText="Any"
+                                    IsChecked="{Binding Filters.Race.RequireAll}"
+                                />
+                            </DockPanel>
+                        </Expander.Header>
+
+                        <StackPanel Orientation="Vertical">
+                            <ItemsControl ItemsSource="{Binding Filters.Race.Options}">
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate>
+                                        <CheckBox
+                                            Content="{Binding Name}"
+                                            IsChecked="{Binding IsSelected}" />
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+                            </ItemsControl>
+                        </StackPanel>
+                    </Expander>
+                    <Expander Name="HairColorExpander" IsExpanded="False">
+                        <Expander.Header>
+                            <DockPanel LastChildFill="False">
+                                <TextBlock VerticalAlignment="Center" Text="Hair Color" />
+                                <controls:LabeledToggleSwitch
+                                    DockPanel.Dock="Right"
+                                    Margin="10,0,0,0"
+                                    CheckedText="All"
+                                    UncheckedText="Any"
+                                    IsChecked="{Binding Filters.HairColor.RequireAll}"
+                                />
+                            </DockPanel>
+                        </Expander.Header>
+
+                        <StackPanel Orientation="Vertical">
+                            <ItemsControl ItemsSource="{Binding Filters.HairColor.Options}">
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate>
+                                        <CheckBox
+                                            Content="{Binding Name}"
+                                            IsChecked="{Binding IsSelected}" />
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+                            </ItemsControl>
+                        </StackPanel>
+                    </Expander>
+                    <Expander Name="HairLengthExpander" IsExpanded="False">
+                        <Expander.Header>
+                            <DockPanel LastChildFill="False">
+                                <TextBlock VerticalAlignment="Center" Text="Hair Length" />
+                                <controls:LabeledToggleSwitch
+                                    DockPanel.Dock="Right"
+                                    Margin="10,0,0,0"
+                                    CheckedText="All"
+                                    UncheckedText="Any"
+                                    IsChecked="{Binding Filters.HairLength.RequireAll}"
+                                />
+                            </DockPanel>
+                        </Expander.Header>
+
+                        <StackPanel Orientation="Vertical">
+                            <ItemsControl ItemsSource="{Binding Filters.HairLength.Options}">
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate>
+                                        <CheckBox
+                                            Content="{Binding Name}"
+                                            IsChecked="{Binding IsSelected}" />
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+                            </ItemsControl>
+                        </StackPanel>
+                    </Expander>
+                    <Expander Name="HeadFeatureExpander" IsExpanded="False">
+                        <Expander.Header>
+                            <DockPanel LastChildFill="False">
+                                <TextBlock VerticalAlignment="Center" Text="Head Features" />
+                                <controls:LabeledToggleSwitch
+                                    DockPanel.Dock="Right"
+                                    Margin="10,0,0,0"
+                                    CheckedText="All"
+                                    UncheckedText="Any"
+                                    IsChecked="{Binding Filters.HeadFeature.RequireAll}"
+                                />
+                            </DockPanel>
+                        </Expander.Header>
+
+                        <StackPanel Orientation="Vertical">
+                            <ItemsControl ItemsSource="{Binding Filters.HeadFeature.Options}">
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate>
+                                        <CheckBox
+                                            Content="{Binding Name}"
+                                            IsChecked="{Binding IsSelected}" />
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+                            </ItemsControl>
+                        </StackPanel>
+                    </Expander>
+                    <Expander Name="WingExpander" IsExpanded="False">
+                        <Expander.Header>
+                            <DockPanel LastChildFill="False">
+                                <TextBlock VerticalAlignment="Center" Text="Wings" />
+                                <controls:LabeledToggleSwitch
+                                    DockPanel.Dock="Right"
+                                    Margin="10,0,0,0"
+                                    CheckedText="All"
+                                    UncheckedText="Any"
+                                    IsChecked="{Binding Filters.Wing.RequireAll}"
+                                />
+                            </DockPanel>
+                        </Expander.Header>
+
+                        <StackPanel Orientation="Vertical">
+                            <ItemsControl ItemsSource="{Binding Filters.Wing.Options}">
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate>
+                                        <CheckBox
+                                            Content="{Binding Name}"
+                                            IsChecked="{Binding IsSelected, Mode=TwoWay}"
+                                            ToolTip="{Binding Value}"
+                                            Tag="{Binding}"
+                                        />
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+                            </ItemsControl>
+                        </StackPanel>
+                    </Expander>
+                    <Expander Name="WeaponExpander" IsExpanded="False">
+                        <Expander.Header>
+                            <DockPanel LastChildFill="False">
+                                <TextBlock VerticalAlignment="Center" Text="Weapon" />
+                                <controls:LabeledToggleSwitch
+                                    DockPanel.Dock="Right"
+                                    Margin="10,0,0,0"
+                                    CheckedText="All"
+                                    UncheckedText="Any"
+                                    IsChecked="{Binding Filters.Weapon.RequireAll}"
+                                />
+                            </DockPanel>
+                        </Expander.Header>
+
+                        <StackPanel Orientation="Vertical">
+                            <ItemsControl ItemsSource="{Binding Filters.Weapon.Options}">
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate>
+                                        <CheckBox
+                                            Content="{Binding Name}"
+                                            IsChecked="{Binding IsSelected}" />
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+                            </ItemsControl>
+                        </StackPanel>
+                    </Expander>
+                    <Expander Name="ArmorExpander" IsExpanded="False">
+                        <Expander.Header>
+                            <DockPanel LastChildFill="False">
+                                <TextBlock VerticalAlignment="Center" Text="Armor" />
+                                <controls:LabeledToggleSwitch
+                                    DockPanel.Dock="Right"
+                                    Margin="10,0,0,0"
+                                    CheckedText="All"
+                                    UncheckedText="Any"
+                                    IsChecked="{Binding Filters.Armor.RequireAll}"
+                                />
+                            </DockPanel>
+                        </Expander.Header>
+
+                        <StackPanel Orientation="Vertical">
+                            <ItemsControl ItemsSource="{Binding Filters.Armor.Options}">
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate>
+                                        <CheckBox
+                                            Content="{Binding Name}"
+                                            IsChecked="{Binding IsSelected}" />
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+                            </ItemsControl>
+                        </StackPanel>
+                    </Expander>
+                    <Expander Name="CompanionExpander" IsExpanded="False">
+                        <Expander.Header>
+                            <DockPanel LastChildFill="False">
+                                <TextBlock VerticalAlignment="Center" Text="Companion" />
+                                <controls:LabeledToggleSwitch
+                                    DockPanel.Dock="Right"
+                                    Margin="10,0,0,0"
+                                    CheckedText="All"
+                                    UncheckedText="Any"
+                                    IsChecked="{Binding Filters.Companion.RequireAll}"
+                                />
+                            </DockPanel>
+                        </Expander.Header>
+
+                        <StackPanel Orientation="Vertical">
+                            <ItemsControl ItemsSource="{Binding Filters.Companion.Options}">
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate>
+                                        <CheckBox
+                                            Content="{Binding Name}"
+                                            IsChecked="{Binding IsSelected}" />
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+                            </ItemsControl>
+                        </StackPanel>
+                    </Expander>
+                    <Expander Name="SurroundingExpander" IsExpanded="False">
+                        <Expander.Header>
+                            <DockPanel LastChildFill="False">
+                                <TextBlock VerticalAlignment="Center" Text="Surroundings" />
+                                <controls:LabeledToggleSwitch
+                                    DockPanel.Dock="Right"
+                                    Margin="10,0,0,0"
+                                    CheckedText="All"
+                                    UncheckedText="Any"
+                                    IsChecked="{Binding Filters.Surrounding.RequireAll}"
+                                />
+                            </DockPanel>
+                        </Expander.Header>
+
+                        <StackPanel Orientation="Vertical">
+                            <ItemsControl ItemsSource="{Binding Filters.Surrounding.Options}">
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate>
+                                        <CheckBox
+                                            Content="{Binding Name}"
+                                            IsChecked="{Binding IsSelected}" />
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+                            </ItemsControl>
+                        </StackPanel>
+                    </Expander>
+                    <Expander Name="PlayerClassExpander" IsExpanded="False">
+                        <Expander.Header>
+                            <DockPanel LastChildFill="False">
+                                <TextBlock VerticalAlignment="Center" Text="Class" />
+                                <controls:LabeledToggleSwitch
+                                    DockPanel.Dock="Right"
+                                    Margin="10,0,0,0"
+                                    CheckedText="All"
+                                    UncheckedText="Any"
+                                    IsChecked="{Binding Filters.PlayerClass.RequireAll}"
+                                />
+                            </DockPanel>
+                        </Expander.Header>
+
+                        <StackPanel Orientation="Vertical">
+                            <ItemsControl ItemsSource="{Binding Filters.PlayerClass.Options}">
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate>
+                                        <CheckBox
+                                            Content="{Binding Name}"
+                                            IsChecked="{Binding IsSelected}" />
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+                            </ItemsControl>
+                        </StackPanel>
+                    </Expander>
+                    <Expander Name="MythicPathExpander" IsExpanded="False">
+                        <Expander.Header>
+                            <DockPanel LastChildFill="False">
+                                <TextBlock VerticalAlignment="Center" Text="Mythic Path" />
+                                <controls:LabeledToggleSwitch
+                                    DockPanel.Dock="Right"
+                                    Margin="10,0,0,0"
+                                    CheckedText="All"
+                                    UncheckedText="Any"
+                                    IsChecked="{Binding Filters.MythicPath.RequireAll}"
+                                />
+                            </DockPanel>
+                        </Expander.Header>
+
+                        <StackPanel Orientation="Vertical">
+                            <ItemsControl ItemsSource="{Binding Filters.MythicPath.Options}">
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate>
+                                        <CheckBox
+                                            Content="{Binding Name}"
+                                            IsChecked="{Binding IsSelected}" />
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+                            </ItemsControl>
+                        </StackPanel>
+                    </Expander>
+                </StackPanel>
+            </ScrollViewer>
+        </DockPanel>
+
         <Grid Grid.Column="1" Margin="15">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*" />
@@ -252,6 +420,9 @@
                      Margin="0,0,15,0"
                      SelectionMode="Single"
                      Focusable="False"
+                     FocusVisualStyle="{x:Null}"
+                     KeyboardNavigation.TabNavigation="None"                     
+                     KeyboardNavigation.DirectionalNavigation="None"
             >
                 <ListBox.ItemContainerStyle>
                     <Style TargetType="ListBoxItem">
@@ -278,7 +449,7 @@
                         <ItemsControl ItemsSource="{Binding RowThumbnails}">
                             <ItemsControl.ItemsPanel>
                                 <ItemsPanelTemplate>
-                                    <StackPanel Orientation="Horizontal"/>
+                                    <StackPanel Orientation="Horizontal" Focusable="False"/>
                                 </ItemsPanelTemplate>
                             </ItemsControl.ItemsPanel>
                             
@@ -347,7 +518,7 @@
                             VerticalAlignment="Stretch"
                             HorizontalAlignment="Stretch"
                         >
-                            <Expander Name="SelectedGenderExpander" Header="Gender" IsExpanded="False" Margin="0,0,10,0" HorizontalAlignment="Stretch">
+                            <Expander Name="SelectedGenderExpander" Header="Gender" IsExpanded="False" Margin="0,0,10,0" HorizontalAlignment="Stretch" Focusable="False">
                                 <StackPanel Orientation="Vertical">
                                     <ItemsControl ItemsSource="{Binding SelectedGender.Options}">
                                         <ItemsControl.ItemTemplate>
@@ -360,7 +531,7 @@
                                     </ItemsControl>
                                 </StackPanel>
                             </Expander>
-                            <Expander Name="SelectedHairColorExpander" Header="Hair Color" IsExpanded="False" Margin="0,0,10,0" HorizontalAlignment="Stretch">
+                            <Expander Name="SelectedHairColorExpander" Header="Hair Color" IsExpanded="False" Margin="0,0,10,0" HorizontalAlignment="Stretch" Focusable="False">
                                 <StackPanel Orientation="Vertical">
                                     <ItemsControl ItemsSource="{Binding SelectedHairColor.Options}">
                                         <ItemsControl.ItemTemplate>
@@ -373,7 +544,7 @@
                                     </ItemsControl>
                                 </StackPanel>
                             </Expander>
-                            <Expander Name="SelectedHairLengthExpander" Header="Hair Length" IsExpanded="False" Margin="0,0,10,0" HorizontalAlignment="Stretch">
+                            <Expander Name="SelectedHairLengthExpander" Header="Hair Length" IsExpanded="False" Margin="0,0,10,0" HorizontalAlignment="Stretch" Focusable="False">
                                 <StackPanel Orientation="Vertical">
                                     <ItemsControl ItemsSource="{Binding SelectedHairLength.Options}">
                                         <ItemsControl.ItemTemplate>
@@ -386,7 +557,7 @@
                                     </ItemsControl>
                                 </StackPanel>
                             </Expander>
-                            <Expander Name="SelectedHeadFeatureExpander" Header="Head Features" IsExpanded="False" Margin="0,0,10,0" HorizontalAlignment="Stretch">
+                            <Expander Name="SelectedHeadFeatureExpander" Header="Head Features" IsExpanded="False" Margin="0,0,10,0" HorizontalAlignment="Stretch" Focusable="False">
                                 <StackPanel Orientation="Vertical">
                                     <ItemsControl ItemsSource="{Binding SelectedHeadFeature.Options}">
                                         <ItemsControl.ItemTemplate>
@@ -399,7 +570,7 @@
                                     </ItemsControl>
                                 </StackPanel>
                             </Expander>
-                            <Expander Name="SelectedWingExpander" Header="Wings" IsExpanded="False" Margin="0,0,10,0" HorizontalAlignment="Stretch">
+                            <Expander Name="SelectedWingExpander" Header="Wings" IsExpanded="False" Margin="0,0,10,0" HorizontalAlignment="Stretch" Focusable="False">
                                 <StackPanel Orientation="Vertical">
                                     <ItemsControl ItemsSource="{Binding SelectedWing.Options}">
                                         <ItemsControl.ItemTemplate>
@@ -412,7 +583,7 @@
                                     </ItemsControl>
                                 </StackPanel>
                             </Expander>
-                            <Expander Name="SelectedCompanionExpander" Header="Companion" IsExpanded="False" Margin="0,0,10,0" HorizontalAlignment="Stretch">
+                            <Expander Name="SelectedCompanionExpander" Header="Companion" IsExpanded="False" Margin="0,0,10,0" HorizontalAlignment="Stretch" Focusable="False">
                                 <StackPanel Orientation="Vertical">
                                     <ItemsControl ItemsSource="{Binding SelectedCompanion.Options}">
                                         <ItemsControl.ItemTemplate>
@@ -432,20 +603,23 @@
                         VerticalAlignment="Stretch"
                         HorizontalAlignment="Stretch"
                         Margin="5"
+                        Focusable="False"
                     >
                         <StackPanel
                             Orientation="Vertical"
                             VerticalAlignment="Stretch"
                             HorizontalAlignment="Stretch"
+                            Focusable="False"
                         >
-                            <Expander Name="SelectedRaceExpander" Header="Race" IsExpanded="False" Margin="0,0,10,0" HorizontalAlignment="Stretch">
+                            <Expander Name="SelectedRaceExpander" Header="Race" IsExpanded="False" Margin="0,0,10,0" HorizontalAlignment="Stretch" Focusable="False">
                                 <StackPanel Orientation="Vertical">
                                     <ItemsControl ItemsSource="{Binding SelectedRace.Options}">
                                         <ItemsControl.ItemTemplate>
                                             <DataTemplate>
                                                 <CheckBox
                                                     Content="{Binding Name}"
-                                                    IsChecked="{Binding IsSelected}" />
+                                                    IsChecked="{Binding IsSelected}"
+                                                    Focusable="False" />
                                             </DataTemplate>
                                         </ItemsControl.ItemTemplate>
                                     </ItemsControl>

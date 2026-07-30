@@ -41,12 +41,17 @@ public partial class MainWindow : Window
 
         RecalculatePortraitRows(nameof(MainWindow_Loaded), _mainViewModel.VisiblePortraits);
 
-        _log.LogInformation("Finished rendering images .");
+        _log.LogInformation("Finished rendering images.");
     }  
 
     private void Window_SizeChanged(object sender, SizeChangedEventArgs e)
     {
         RecalculatePortraitRows(nameof(Window_SizeChanged), _mainViewModel.VisiblePortraits);
+    }
+
+    private void ResetFiltersButton_Click(object sender, RoutedEventArgs e)
+    {
+        _mainViewModel.ResetFilters();
     }
 
     private void RecalculatePortraitRows([CallerMemberName] string caller = "", IEnumerable<PortraitViewModel>? visiblePortraits = null)
@@ -59,8 +64,6 @@ public partial class MainWindow : Window
         }
 
         var columns = (int)Math.Max(1, Math.Floor(availableWidth / ThumbnailWidth));
-
-        _log.LogInformation("{caller} | Should make {columns} columns", caller, columns);
 
         _mainViewModel.PortraitRows.Clear();
         for (int i = 0; i < visiblePortraits.Count(); i += columns)

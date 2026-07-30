@@ -18,6 +18,20 @@ public partial class FlagCollection<T>: ObservableObject
         }
     }
 
+    [ObservableProperty]
+    private FilterMode filterMode = FilterMode.Any;
+    partial void OnFilterModeChanged(FilterMode value)
+    {
+        OnPropertyChanged(nameof(RequireAll));
+    }
+    public bool RequireAll
+    {
+        get => FilterMode == FilterMode.All;
+        set => FilterMode = value
+            ? FilterMode.All
+            : FilterMode.Any;
+    }
+
     public IReadOnlyList<FlagOption<T>> Options { get; set; }
 
     public FlagCollection()
