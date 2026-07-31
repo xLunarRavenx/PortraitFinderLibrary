@@ -34,4 +34,25 @@ public static class EnumFlags
 
         return (T)Enum.ToObject(typeof(T), leftValue ^ rightValue);
     }
+
+    private static Dictionary<Type, List<Enum>> _flagValuesDictionary = new();
+    public static List<EnumFlagValue> GetFlagValues<T>(this T value)
+        where T : struct, Enum
+    {
+        if (!_flagValuesDictionary.TryGetValue(typeof(T), out var flagValues))
+        {
+            flagValues = [.. Enum.GetValues<T>().Except([default])];
+            _flagValuesDictionary[typeof(T)] = flagValues;
+        }
+
+        return [.. flagValues
+            .Where(value.HasFlag)
+            .Select(f => new EnumFlagValue
+            {
+                EnumType = typeof(T),
+                Name = f.ToString(),
+                IsSelected = value.HasFlag(f)
+            })
+        ];
+    }
 }

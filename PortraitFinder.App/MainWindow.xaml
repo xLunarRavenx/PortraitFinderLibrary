@@ -488,204 +488,106 @@
                 <Image Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="2" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Source="{Binding SelectedMediumPortrait}" />
                 <Image Grid.Column="3" Grid.Row="0" Grid.RowSpan="3" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Source="{Binding SelectedFullLengthPortrait}" />
 
-                <Grid
+                <ItemsControl
                     Grid.Column="0"
-                    Grid.Row="4"
+                    Grid.Row="3"
                     Grid.ColumnSpan="4"
                     VerticalAlignment="Stretch"
                     HorizontalAlignment="Stretch"
-                >
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition/>
-                        <ColumnDefinition/>
-                    </Grid.ColumnDefinitions>
+                    Margin="5,5,0,5"
+                    ItemsSource="{Binding SelectedPortraitTags}"
 
-                    <ScrollViewer 
-                        Grid.Column="0"
-                        VerticalAlignment="Stretch"
-                        HorizontalAlignment="Stretch"
-                        Margin="5,5,0,5"
-                    >
-                        <StackPanel
-                            Orientation="Vertical"
-                            VerticalAlignment="Stretch"
-                            HorizontalAlignment="Stretch"
-                        >
-                            <Expander Name="SelectedGenderExpander" Header="Gender" IsExpanded="False" Margin="0,0,10,0" HorizontalAlignment="Stretch" Focusable="False">
-                                <StackPanel Orientation="Vertical">
-                                    <ItemsControl ItemsSource="{Binding SelectedGender.Options}">
-                                        <ItemsControl.ItemTemplate>
-                                            <DataTemplate>
-                                                <CheckBox
-                                                    Content="{Binding Name}"
-                                                    IsChecked="{Binding IsSelected}" />
-                                            </DataTemplate>
-                                        </ItemsControl.ItemTemplate>
-                                    </ItemsControl>
-                                </StackPanel>
-                            </Expander>
-                            <Expander Name="SelectedHairColorExpander" Header="Hair Color" IsExpanded="False" Margin="0,0,10,0" HorizontalAlignment="Stretch" Focusable="False">
-                                <StackPanel Orientation="Vertical">
-                                    <ItemsControl ItemsSource="{Binding SelectedHairColor.Options}">
-                                        <ItemsControl.ItemTemplate>
-                                            <DataTemplate>
-                                                <CheckBox
-                                                    Content="{Binding Name}"
-                                                    IsChecked="{Binding IsSelected}" />
-                                            </DataTemplate>
-                                        </ItemsControl.ItemTemplate>
-                                    </ItemsControl>
-                                </StackPanel>
-                            </Expander>
-                            <Expander Name="SelectedHairLengthExpander" Header="Hair Length" IsExpanded="False" Margin="0,0,10,0" HorizontalAlignment="Stretch" Focusable="False">
-                                <StackPanel Orientation="Vertical">
-                                    <ItemsControl ItemsSource="{Binding SelectedHairLength.Options}">
-                                        <ItemsControl.ItemTemplate>
-                                            <DataTemplate>
-                                                <CheckBox
-                                                    Content="{Binding Name}"
-                                                    IsChecked="{Binding IsSelected}" />
-                                            </DataTemplate>
-                                        </ItemsControl.ItemTemplate>
-                                    </ItemsControl>
-                                </StackPanel>
-                            </Expander>
-                            <Expander Name="SelectedHeadFeatureExpander" Header="Head Features" IsExpanded="False" Margin="0,0,10,0" HorizontalAlignment="Stretch" Focusable="False">
-                                <StackPanel Orientation="Vertical">
-                                    <ItemsControl ItemsSource="{Binding SelectedHeadFeature.Options}">
-                                        <ItemsControl.ItemTemplate>
-                                            <DataTemplate>
-                                                <CheckBox
-                                                    Content="{Binding Name}"
-                                                    IsChecked="{Binding IsSelected}" />
-                                            </DataTemplate>
-                                        </ItemsControl.ItemTemplate>
-                                    </ItemsControl>
-                                </StackPanel>
-                            </Expander>
-                            <Expander Name="SelectedWingExpander" Header="Wings" IsExpanded="False" Margin="0,0,10,0" HorizontalAlignment="Stretch" Focusable="False">
-                                <StackPanel Orientation="Vertical">
-                                    <ItemsControl ItemsSource="{Binding SelectedWing.Options}">
-                                        <ItemsControl.ItemTemplate>
-                                            <DataTemplate>
-                                                <CheckBox
-                                                    Content="{Binding Name}"
-                                                    IsChecked="{Binding IsSelected}" />
-                                            </DataTemplate>
-                                        </ItemsControl.ItemTemplate>
-                                    </ItemsControl>
-                                </StackPanel>
-                            </Expander>
-                            <Expander Name="SelectedCompanionExpander" Header="Companion" IsExpanded="False" Margin="0,0,10,0" HorizontalAlignment="Stretch" Focusable="False">
-                                <StackPanel Orientation="Vertical">
-                                    <ItemsControl ItemsSource="{Binding SelectedCompanion.Options}">
-                                        <ItemsControl.ItemTemplate>
-                                            <DataTemplate>
-                                                <CheckBox
-                                                    Content="{Binding Name}"
-                                                    IsChecked="{Binding IsSelected}" />
-                                            </DataTemplate>
-                                        </ItemsControl.ItemTemplate>
-                                    </ItemsControl>
-                                </StackPanel>
-                            </Expander>
-                        </StackPanel>
-                    </ScrollViewer> 
-                    <ScrollViewer 
-                        Grid.Column="1"
-                        VerticalAlignment="Stretch"
-                        HorizontalAlignment="Stretch"
-                        Margin="5"
-                        Focusable="False"
-                    >
-                        <StackPanel
-                            Orientation="Vertical"
-                            VerticalAlignment="Stretch"
-                            HorizontalAlignment="Stretch"
-                            Focusable="False"
-                        >
-                            <Expander Name="SelectedRaceExpander" Header="Race" IsExpanded="False" Margin="0,0,10,0" HorizontalAlignment="Stretch" Focusable="False">
-                                <StackPanel Orientation="Vertical">
-                                    <ItemsControl ItemsSource="{Binding SelectedRace.Options}">
-                                        <ItemsControl.ItemTemplate>
-                                            <DataTemplate>
-                                                <CheckBox
-                                                    Content="{Binding Name}"
-                                                    IsChecked="{Binding IsSelected}"
-                                                    Focusable="False" />
-                                            </DataTemplate>
-                                        </ItemsControl.ItemTemplate>
-                                    </ItemsControl>
-                                </StackPanel>
-                            </Expander>
-                            <Expander Name="SelectedPlayerClassExpander" Header="Class" IsExpanded="False" Margin="0,0,10,0" HorizontalAlignment="Stretch">
-                                <StackPanel Orientation="Vertical">
-                                    <ItemsControl ItemsSource="{Binding SelectedPlayerClass.Options}">
-                                        <ItemsControl.ItemTemplate>
-                                            <DataTemplate>
-                                                <CheckBox
-                                                    Content="{Binding Name}"
-                                                    IsChecked="{Binding IsSelected}" />
-                                            </DataTemplate>
-                                        </ItemsControl.ItemTemplate>
-                                    </ItemsControl>
-                                </StackPanel>
-                            </Expander>
-                            <Expander Name="SelectedMythicPathExpander" Header="Mythic Path" IsExpanded="False" Margin="0,0,10,0" HorizontalAlignment="Stretch">
-                                <StackPanel Orientation="Vertical">
-                                    <ItemsControl ItemsSource="{Binding SelectedMythicPath.Options}">
-                                        <ItemsControl.ItemTemplate>
-                                            <DataTemplate>
-                                                <CheckBox
-                                                    Content="{Binding Name}"
-                                                    IsChecked="{Binding IsSelected}" />
-                                            </DataTemplate>
-                                        </ItemsControl.ItemTemplate>
-                                    </ItemsControl>
-                                </StackPanel>
-                            </Expander>
-                            <Expander Name="SelectedWeaponExpander" Header="Weapon" IsExpanded="False" Margin="0,0,10,0" HorizontalAlignment="Stretch">
-                                <StackPanel Orientation="Vertical">
-                                    <ItemsControl ItemsSource="{Binding SelectedWeapon.Options}">
-                                        <ItemsControl.ItemTemplate>
-                                            <DataTemplate>
-                                                <CheckBox
-                                                    Content="{Binding Name}"
-                                                    IsChecked="{Binding IsSelected}" />
-                                            </DataTemplate>
-                                        </ItemsControl.ItemTemplate>
-                                    </ItemsControl>
-                                </StackPanel>
-                            </Expander>
-                            <Expander Name="SelectedArmorExpander" Header="Armor" IsExpanded="False" Margin="0,0,10,0" HorizontalAlignment="Stretch">
-                                <StackPanel Orientation="Vertical">
-                                    <ItemsControl ItemsSource="{Binding SelectedArmor.Options}">
-                                        <ItemsControl.ItemTemplate>
-                                            <DataTemplate>
-                                                <CheckBox
-                                                    Content="{Binding Name}"
-                                                    IsChecked="{Binding IsSelected}" />
-                                            </DataTemplate>
-                                        </ItemsControl.ItemTemplate>
-                                    </ItemsControl>
-                                </StackPanel>
-                            </Expander>
-                            <Expander Name="SelectedSurroundingExpander" Header="Surroundings" IsExpanded="False" Margin="0,0,10,0" HorizontalAlignment="Stretch">
-                                <StackPanel Orientation="Vertical">
-                                    <ItemsControl ItemsSource="{Binding SelectedSurrounding.Options}">
-                                        <ItemsControl.ItemTemplate>
-                                            <DataTemplate>
-                                                <CheckBox
-                                                    Content="{Binding Name}"
-                                                    IsChecked="{Binding IsSelected}" />
-                                            </DataTemplate>
-                                        </ItemsControl.ItemTemplate>
-                                    </ItemsControl>
-                                </StackPanel>
-                            </Expander>
-                        </StackPanel>
-                    </ScrollViewer>
-                </Grid>
+                >
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <WrapPanel Orientation="Horizontal" />
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+
+                    
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <Border Margin="5" Height="30" BorderThickness="2" CornerRadius="15">
+                                <Border.Style>
+                                    <Style TargetType="Border">
+                                        <Setter Property="Background" Value="#102e4a" />
+                                        <Setter Property="BorderBrush" Value="#22598a" />
+                                        <Style.Triggers>
+                                            <Trigger Property="IsMouseOver" Value="True">
+                                                <Setter Property="Background" Value="#081a2a" />
+                                                <Setter Property="BorderBrush" Value="#4a90d9" />
+                                            </Trigger>
+                                            <DataTrigger Binding="{Binding TagPresence}" Value="Some">
+                                                <Setter Property="Background" Value="#464225" />
+                                                <Setter Property="BorderBrush" Value="#787042" />
+                                                <!-- <Setter Property="Background" Value="#312746" /> -->
+                                                <!-- <Setter Property="BorderBrush" Value="#5d4c83" /> -->
+                                            </DataTrigger>
+                                            <DataTrigger Binding="{Binding TagPresence}" Value="All">
+                                                <Setter Property="Background" Value="#0b331d" />
+                                                <Setter Property="BorderBrush" Value="#1c613b" />
+                                            </DataTrigger>
+
+                                            <MultiDataTrigger>
+                                                <MultiDataTrigger.Conditions>
+                                                    <Condition Binding="{Binding Path=IsMouseOver, RelativeSource={RelativeSource Self}}" Value="True" />
+                                                    <Condition Binding="{Binding TagPresence}" Value="Some" />
+                                                </MultiDataTrigger.Conditions>
+                                                <Setter Property="Background" Value="#2d2a17" />
+                                                <Setter Property="BorderBrush" Value="#b7b175" />
+                                                <!-- <Setter Property="Background" Value="#1a1628" /> -->
+                                                <!-- <Setter Property="BorderBrush" Value="#9a7dce" /> -->
+                                            </MultiDataTrigger>
+                                            <MultiDataTrigger>
+                                                <MultiDataTrigger.Conditions>
+                                                    <Condition Binding="{Binding Path=IsMouseOver, RelativeSource={RelativeSource Self}}" Value="True" />
+                                                    <Condition Binding="{Binding TagPresence}" Value="All" />
+                                                </MultiDataTrigger.Conditions>
+                                                <Setter Property="Background" Value="#071d0d" />
+                                                <Setter Property="BorderBrush" Value="#359d67" />
+                                            </MultiDataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </Border.Style>
+
+<!--
+tagpresense none bg: #6a6b6b
+tagpresense none border: #878888
+tagpresense none hover bg: #5c5c5d
+tagpresense none hover border: #b1b2b2
+
+-->
+
+                                <TextBlock Text="{Binding Name}" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="15,0" ToolTip="{Binding FilterType}" />
+                            </Border>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+
+                    <!-- <ItemsControl.ItemContainerStyle>
+                        <Style TargetType="Border">
+                            <Setter Property="Background" Value="#102e4a" />
+                            <Setter Property="BorderBrush" Value="#22598a" />
+                            <Style.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter Property="Background" Value="#081a2a" />
+                                    <Setter Property="BorderBrush" Value="#4a90d9" />
+                                </Trigger>
+                                <DataTrigger Binding="{Binding IsMultiSelected}" Value="True">
+                                    <Setter Property="Background" Value="#312746" />
+                                    <Setter Property="BorderBrush" Value="#5d4c83" />
+                                </DataTrigger>
+                                <MultiDataTrigger>
+                                    <MultiDataTrigger.Conditions>
+                                        <Condition Binding="{Binding Path=IsMouseOver, RelativeSource={RelativeSource Self}}" Value="True" />
+                                        <Condition Binding="{Binding IsMultiSelected}" Value="True" />
+                                    </MultiDataTrigger.Conditions>
+                                    <Setter Property="Background" Value="#1a1628" />
+                                    <Setter Property="BorderBrush" Value="#9a7dce" />
+                                </MultiDataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </ItemsControl.ItemContainerStyle> -->
+                </ItemsControl>
             </Grid>
         </Grid>
     </Grid>
